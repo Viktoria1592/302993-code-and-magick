@@ -58,4 +58,4 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillText(names[i], COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y);
   }
 
-}
+};
