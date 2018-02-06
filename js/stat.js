@@ -10,13 +10,15 @@ var BAR_HEIGHT = 150;
 var BAR_GAP = 50;
 var COLUMN_BLOCK_X = CLOUD_X + GAP * 4;
 var COLUMN_BLOCK_Y = CLOUD_Y + GAP * 11 + BAR_HEIGHT;
+var USER_DEFAULT_COLOR = 'rgba(255, 0, 0, 1)';
 
-
+//функция отрисовки облака
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
+// функция нахождения максимального значения
 var getMaxElement = function (arr) {
   var maxElement = arr[0];
 
@@ -29,14 +31,30 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
+// функция отрисовки строки приветствия
+var writeText = function (ctx, text, x, y) {
+  ctx.fillStyle = '#000';
+  ctx.font = '16px PT Mono';
+  ctx.fillText(text, x, y);
+};
+
+// функция получения рандомного значения прозрачности
+function getRandomOpacity() {
+  var min = 0;
+  var max = 1;
+
+  var opacity = (Math.random() * (max - min) + min).toFixed(2);
+
+  return opacity;
+};
+
 window.renderStatistics = function (ctx, names, times) {
+
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.3)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
-  ctx.fillStyle = '#000';
-  ctx.font = '16px PT Mono';
-  ctx.fillText('Ура вы победили!', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 3);
-  ctx.fillText('Список результатов:', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 5);
+  writeText(ctx, 'Ура вы победили!', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 3);
+  writeText(ctx, 'Список результатов:', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 5);
 
   var maxTime = getMaxElement(times);
 
@@ -44,18 +62,19 @@ window.renderStatistics = function (ctx, names, times) {
     var columnHeight = (BAR_HEIGHT * times[i].toFixed(0)) / maxTime;
 
     if (names[i] === 'Вы') {
-      var color = 'rgba(255, 0, 0, 1)';
-    } else if (names[i] === 'Кекс') {
-      color = 'blue';
+      var color = USER_DEFAULT_COLOR;
     } else {
-      color = 'grey';
+      color = 'rgba(0, 0, 255, ' + getRandomOpacity() + ')';
     }
 
-    ctx.fillText(times[i].toFixed(0), COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y - (columnHeight + GAP * 3));
-    ctx.fillStyle = color;
-    ctx.fillRect(COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y - (columnHeight + GAP * 2), BAR_WIDTH, columnHeight);
-    ctx.fillStyle = '#000';
-    ctx.fillText(names[i], COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y);
-  }
+    // функция отрисовки гистограммы
+    var renderColumn = function (ctx, color, x, height) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, COLUMN_BLOCK_Y - (columnHeight + GAP * 2), BAR_WIDTH, height);
+    };
 
+    writeText(ctx, times[i].toFixed(0), COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y - (columnHeight + GAP * 3));
+    renderColumn(ctx, color, COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, columnHeight);
+    writeText(ctx, names[i], COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y);
+  }
 };
