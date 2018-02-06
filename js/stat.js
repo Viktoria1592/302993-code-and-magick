@@ -12,7 +12,7 @@ var COLUMN_BLOCK_X = CLOUD_X + GAP * 4;
 var COLUMN_BLOCK_Y = CLOUD_Y + GAP * 11 + BAR_HEIGHT;
 var USER_DEFAULT_COLOR = 'rgba(255, 0, 0, 1)';
 
-//функция отрисовки облака
+// функция отрисовки облака
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
@@ -46,7 +46,7 @@ function getRandomOpacity() {
   var opacity = (Math.random() * (max - min) + min).toFixed(2);
 
   return opacity;
-};
+}
 
 window.renderStatistics = function (ctx, names, times) {
 
@@ -68,13 +68,13 @@ window.renderStatistics = function (ctx, names, times) {
     }
 
     // функция отрисовки гистограммы
-    var renderColumn = function (ctx, color, x, height) {
+    var renderColumn = function (x, height) {
       ctx.fillStyle = color;
       ctx.fillRect(x, COLUMN_BLOCK_Y - (columnHeight + GAP * 2), BAR_WIDTH, height);
     };
 
     writeText(ctx, times[i].toFixed(0), COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y - (columnHeight + GAP * 3));
-    renderColumn(ctx, color, COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, columnHeight);
+    renderColumn(COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, columnHeight);
     writeText(ctx, names[i], COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y);
   }
 };
