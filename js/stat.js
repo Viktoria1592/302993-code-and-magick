@@ -52,13 +52,13 @@ window.renderStatistics = function (ctx, names, times) {
     var columnHeight = (BAR_HEIGHT * times[i].toFixed(0)) / maxTime;
 
     // функция получения цвета с рандомной прозрачностью
-    function getBarColor() {
+    var getBarColor = function () {
       if (names[i] === 'Вы') {
         var color = USER_DEFAULT_COLOR;
       } else {
         color = 'rgba(0, 0, 255, ' + Math.random().toFixed(2) + ')';
       }
-        return color;
+      return color;
     }
 
     // функция отрисовки гистограммы
