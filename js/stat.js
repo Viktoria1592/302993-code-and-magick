@@ -59,7 +59,7 @@ window.renderStatistics = function (ctx, names, times) {
         color = 'rgba(0, 0, 255, ' + Math.random().toFixed(2) + ')';
       }
       return color;
-    }
+    };
 
     // функция отрисовки гистограммы
     var renderColumn = function (x, height) {
