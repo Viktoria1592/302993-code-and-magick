@@ -38,16 +38,6 @@ var writeText = function (ctx, text, x, y) {
   ctx.fillText(text, x, y);
 };
 
-// функция получения рандомного значения прозрачности
-function getRandomOpacity() {
-  var min = 0;
-  var max = 1;
-
-  var opacity = (Math.random() * (max - min) + min).toFixed(2);
-
-  return opacity;
-}
-
 window.renderStatistics = function (ctx, names, times) {
 
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.3)');
@@ -61,15 +51,19 @@ window.renderStatistics = function (ctx, names, times) {
   for (var i = 0; i < names.length; i++) {
     var columnHeight = (BAR_HEIGHT * times[i].toFixed(0)) / maxTime;
 
-    if (names[i] === 'Вы') {
-      var color = USER_DEFAULT_COLOR;
-    } else {
-      color = 'rgba(0, 0, 255, ' + getRandomOpacity() + ')';
+    // функция получения цвета с рандомной прозрачностью
+    function getBarColor() {
+      if (names[i] === 'Вы') {
+        var color = USER_DEFAULT_COLOR;
+      } else {
+        color = 'rgba(0, 0, 255, ' + Math.random().toFixed(2) + ')';
+      }
+        return color;
     }
 
     // функция отрисовки гистограммы
     var renderColumn = function (x, height) {
-      ctx.fillStyle = color;
+      ctx.fillStyle = getBarColor();
       ctx.fillRect(x, COLUMN_BLOCK_Y - (columnHeight + GAP * 2), BAR_WIDTH, height);
     };
 
