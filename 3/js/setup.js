@@ -53,4 +53,4 @@
 
   userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
-}());
+})();
