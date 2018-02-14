@@ -6,9 +6,12 @@
   var ENTER_KEYCODE = 13;
   var WIZARD_SECOND_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
   var WIZARD_FIRST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
-  var fireballWrapColor = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+
+  var item = {
+    eyes: ['black', 'red', 'blue', 'yellow', 'green'],
+    coat: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
+    fireball: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'],
+  };
 
   // Открытие/закрытие окна настройки персонажа
   var userDialogOpen = document.querySelector('.setup-open');
@@ -78,6 +81,24 @@
     return arr[rand];
   };
 
+  // функция последовательного выбора цвета у массива
+  // счетчик
+  var counter = {
+    eyes: 0,
+    coat: 0,
+    fireball: 0
+  };
+
+  var getColor = function (type) {
+    counter[type]++;
+
+    if (counter[type] >= item[type].length) {
+      counter[type] = 0;
+    }
+
+    return item[type][counter[type]];
+  };
+
   var getWizards = function () {
     var wizards = [];
 
@@ -85,8 +106,8 @@
       wizards[i] =
         {
           name: randomArrItem(WIZARD_SECOND_NAMES) + ' ' + randomArrItem(WIZARD_FIRST_NAMES),
-          coatColor: randomArrItem(coatColor),
-          eyesColor: randomArrItem(eyesColor)
+          coatColor: randomArrItem(item.coat),
+          eyesColor: randomArrItem(item.eyes)
         };
     }
     return wizards;
@@ -115,17 +136,17 @@
   // смена цветов волшебника
   // смена цвета мантии
   wizardCoat.addEventListener('click', function () {
-    wizardCoat.style.fill = randomArrItem(coatColor);
+    wizardCoat.style.fill = getColor(wizardCoat.id);
   });
 
   // смена цвета глаз
   wizardEyes.addEventListener('click', function () {
-    wizardEyes.style.fill = randomArrItem(eyesColor);
+    wizardEyes.style.fill = getColor(wizardEyes.id);
   });
 
   // смена цвета фаербола
   wizardFireball.addEventListener('click', function () {
-    wizardFireball.style.backgroundColor = randomArrItem(fireballWrapColor);
+    wizardFireball.style.backgroundColor = getColor(wizardFireball.id);
   });
 
 })();
