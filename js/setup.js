@@ -6,9 +6,10 @@
   var ENTER_KEYCODE = 13;
   var WIZARD_SECOND_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
   var WIZARD_FIRST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
-  var fireballWrapColor = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+
+  var wizardEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
+  var wizardCoatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+  var wizardFireballColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
   // Открытие/закрытие окна настройки персонажа
   var userDialogOpen = document.querySelector('.setup-open');
@@ -78,6 +79,12 @@
     return arr[rand];
   };
 
+  // функция последовательного выбора цвета у массива
+  var getColor = function (arr) {
+    arr.push(arr.shift());
+    return arr[0];
+  };
+
   var getWizards = function () {
     var wizards = [];
 
@@ -85,8 +92,8 @@
       wizards[i] =
         {
           name: randomArrItem(WIZARD_SECOND_NAMES) + ' ' + randomArrItem(WIZARD_FIRST_NAMES),
-          coatColor: randomArrItem(coatColor),
-          eyesColor: randomArrItem(eyesColor)
+          coatColor: randomArrItem(wizardCoatColors),
+          eyesColor: randomArrItem(wizardEyesColors)
         };
     }
     return wizards;
@@ -115,17 +122,17 @@
   // смена цветов волшебника
   // смена цвета мантии
   wizardCoat.addEventListener('click', function () {
-    wizardCoat.style.fill = randomArrItem(coatColor);
+    wizardCoat.style.fill = getColor(wizardCoatColors);
   });
 
   // смена цвета глаз
   wizardEyes.addEventListener('click', function () {
-    wizardEyes.style.fill = randomArrItem(eyesColor);
+    wizardEyes.style.fill = getColor(wizardEyesColors);
   });
 
   // смена цвета фаербола
   wizardFireball.addEventListener('click', function () {
-    wizardFireball.style.backgroundColor = randomArrItem(fireballWrapColor);
+    wizardFireball.style.backgroundColor = getColor(wizardFireballColors);
   });
 
 })();
