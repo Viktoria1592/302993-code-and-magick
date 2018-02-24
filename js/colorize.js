@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var wizardFireballColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
   // функция последовательного выбора цвета у массива
   window.getColor = function (arr) {
@@ -17,12 +16,12 @@
 
   // смена цвета глаз
   window.wizardEyes.addEventListener('click', function () {
-    window.wizardEyes.style.fill = window.getColor(window.windowwizardEyesColors);
+    window.wizardEyes.style.fill = window.getColor(window.wizardEyesColors);
   });
 
   // смена цвета фаербола
   window.wizardFireball.addEventListener('click', function () {
-    window.wizardFireball.style.backgroundColor = window.getColor(wizardFireballColors);
+    window.wizardFireball.style.backgroundColor = window.getColor(window.wizardFireballColors);
   });
 
 })();
