@@ -7,6 +7,10 @@
   var userDialogClose = document.querySelector('.setup-close');
   var userDialogUserName = document.querySelector('.setup-user-name');
 
+  // позиция окна по умолчанию
+  var topPosition = getComputedStyle(window.userDialog).top;
+  var leftPosition = getComputedStyle(window.userDialog).left;
+
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
 
@@ -44,6 +48,8 @@
   // функция закрытия
   var closePopup = function () {
     window.userDialog.classList.add('hidden');
+    window.userDialog.style.top = topPosition;
+    window.userDialog.style.left = leftPosition;
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
