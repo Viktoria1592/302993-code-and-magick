@@ -74,7 +74,6 @@
 
   var shopElement = document.querySelector('.setup-artifacts-shop');
   var artifactsElement = document.querySelector('.setup-artifacts');
-  var artifactCellElement = artifactsElement.querySelectorAll('.setup-artifacts-cell');
   var draggedItem = null;
 
   shopElement.addEventListener('dragstart', function (evt) {
@@ -83,10 +82,14 @@
       evt.dataTransfer.setData('text/plain', evt.target.alt);
     }
 
-    artifactCellElement.forEach(function (cell) {
-      cell.style.outline = '2px dashed red';
-    });
+    artifactsElement.style.outline = '2px dashed red';
   });
+
+  document.addEventListener('dragend', function (evt) {
+    evt.preventDefault();
+    artifactsElement.style.outline = '';
+  }
+  );
 
   artifactsElement.addEventListener('dragover', function (evt) {
     evt.preventDefault();
@@ -94,9 +97,7 @@
   });
 
   artifactsElement.addEventListener('dragstart', function () {
-    artifactCellElement.forEach(function (cell) {
-      cell.style.outline = '2px dashed red';
-    });
+    artifactsElement.style.outline = '2px dashed red';
   });
 
   artifactsElement.addEventListener('drop', function (evt) {
@@ -107,9 +108,7 @@
       evt.target.appendChild(draggedItem);
     }
 
-    artifactCellElement.forEach(function (cell) {
-      cell.style.outline = '';
-    });
+    artifactsElement.style.outline = '';
   });
 
   artifactsElement.addEventListener('dragenter', function (evt) {
@@ -127,10 +126,7 @@
   document.addEventListener('dragend', function (evt) {
     evt.preventDefault();
 
-    artifactCellElement.forEach(function (cell) {
-      cell.style.backgroundColor = '';
-    });
-
+    artifactsElement.style.backgroundColor = '';
   });
 
 })();
