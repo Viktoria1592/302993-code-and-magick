@@ -131,7 +131,7 @@
   var form = window.userDialog.querySelector('.setup-wizard-form');
 
   form.addEventListener('submit', function (evt) {
-    window.upload(successHandler, errorHandler, new FormData(form), function () {
+    window.upload(new FormData(form), function () {
       window.userDialog.classList.add('hidden');
     });
     evt.preventDefault();
