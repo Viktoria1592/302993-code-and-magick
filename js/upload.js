@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/code-and-magick';
+  var URL = 'https://js.dump.academy/code-and-magick123';
 
   window.upload = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
