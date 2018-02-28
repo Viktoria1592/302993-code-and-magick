@@ -3,7 +3,7 @@
 (function () {
   var URL = 'https://js.dump.academy/code-and-magick';
 
-  window.upload = function (data, onSuccess, onError) {
+  window.upload = function (onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 

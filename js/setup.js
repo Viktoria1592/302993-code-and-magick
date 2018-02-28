@@ -54,7 +54,6 @@
   };
 
   window.load(successHandler, errorHandler);
-  window.upload(successHandler, errorHandler);
 
   // смена цветов волшебника
   // смена цвета мантии
@@ -132,7 +131,7 @@
   var form = window.userDialog.querySelector('.setup-wizard-form');
 
   form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function () {
+    window.upload(successHandler, errorHandler, new FormData(form), function () {
       window.userDialog.classList.add('hidden');
     });
     evt.preventDefault();
