@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  window.userDialog = document.querySelector('.setup');
   var similarListElement = document.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
 
@@ -10,50 +9,52 @@
   window.wizardEyes = document.querySelector('.wizard-eyes');
   window.wizardFireball = document.querySelector('.setup-fireball-wrap');
 
+  var WIZARD_SECOND_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+  var WIZARD_FIRST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+
   window.wizardEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
   window.wizardCoatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
   window.wizardFireballColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+
+  // функция подбора рандомных элемента массива
+  var randomArrItem = function (arr) {
+    var rand = Math.floor(Math.random() * arr.length);
+    return arr[rand];
+  };
+
+  var getWizards = function () {
+    var wizards = [];
+
+    for (var i = 0; i < 4; i++) {
+      wizards[i] =
+        {
+          name: randomArrItem(WIZARD_SECOND_NAMES) + ' ' + randomArrItem(WIZARD_FIRST_NAMES),
+          coatColor: randomArrItem(window.wizardCoatColors),
+          eyesColor: randomArrItem(window.wizardEyesColors)
+        };
+    }
+    return wizards;
+  };
+
+  var wizards = getWizards();
 
   var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
     wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
 
     return wizardElement;
   };
 
-  var successHandler = function (wizards) {
-    var fragment = document.createDocumentFragment();
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < wizards.length; i++) {
+    fragment.appendChild(renderWizard(wizards[i]));
+  }
+  similarListElement.appendChild(fragment);
 
-    for (var i = 0; i < 4; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
-    }
-    similarListElement.appendChild(fragment);
-
-    window.userDialog.querySelector('.setup-similar').classList.remove('hidden');
-  };
-
-  var errorHandler = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: rgba(255, 0, 0, .8);';
-    node.style.position = 'absolute';
-    node.style.display = 'flex';
-    node.style.alignItems = 'center';
-    node.style.justifyContent = 'center';
-    node.style.height = '30%';
-    node.style.width = '50%';
-    node.style.transform = 'translate(-50%, -50%)';
-    node.style.top = '40%';
-    node.style.left = '50%';
-    node.style.fontSize = '40px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
-  window.load(successHandler, errorHandler);
+  document.querySelector('.setup-similar').classList.remove('hidden');
 
   // смена цветов волшебника
   // смена цвета мантии
@@ -126,15 +127,6 @@
     evt.preventDefault();
 
     artifactsElement.style.backgroundColor = '';
-  });
-
-  var form = window.userDialog.querySelector('.setup-wizard-form');
-
-  form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function () {
-      window.userDialog.classList.add('hidden');
-    });
-    evt.preventDefault();
   });
 
 })();

@@ -3,6 +3,7 @@
 (function () {
   // Открытие/закрытие окна настройки персонажа
   var userDialogOpen = document.querySelector('.setup-open');
+  window.userDialog = document.querySelector('.setup');
   var userDialogClose = document.querySelector('.setup-close');
   var userDialogUserName = document.querySelector('.setup-user-name');
 
