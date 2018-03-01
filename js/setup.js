@@ -133,8 +133,7 @@
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function () {
       window.userDialog.classList.add('hidden');
-    });
+    }, errorHandler);
     evt.preventDefault();
   });
-
 })();

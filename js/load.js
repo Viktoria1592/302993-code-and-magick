@@ -27,11 +27,6 @@
           onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
           break;
       }
-      // if (xhr.status === 200) {
-      //   onSuccess(xhr.response);
-      // } else {
-      //   onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-      // }
     });
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
